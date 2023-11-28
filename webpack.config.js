@@ -2,32 +2,28 @@ const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   devServer: {
+    host: 'localhost',
     static: {
-      publicPath: '/dist',
-      directory: path.resolve(__dirname, 'dist'),
+      publicPath: '/build',
+      directory: path.resolve(__dirname, 'build'),
     },
     port: 8080,
-    // proxy: {
-    //     '/create': {
-    //         target: 'http://localhost:8080',
-    //         router: () => 'http://localhost:3000',
-    //         logLevel: 'debug',
-    //     }
-    // }
-    // proxy: { '/create': 'http://localhost:3000'}
+    historyApiFallback: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: { '/**': { target: 'http://localhost:3000', secure: false } },
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: './src/index.html',
+      template: './client/index.html',
     }),
   ],
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
@@ -41,7 +37,7 @@ module.exports = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /\.scss/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
@@ -59,14 +55,13 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        include: /assets/,
         use: [
+          'file-loader',
           {
-            loader: 'file-loader',
+            loader: 'image-webpack-loader',
             options: {
-              name: '[name].[ext]',
-              outputPath: 'images/',
-              publicPath: 'images/',
+              bypassOnDebug: true,
+              disable: true,
             },
           },
         ],
