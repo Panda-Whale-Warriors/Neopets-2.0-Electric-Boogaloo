@@ -31,8 +31,6 @@ userController.createUser = (req, res, next) => {
     .catch((error) => {
       console.log("Error in creating a user", error);
       return res.status(500).json({ error: "Internal Server Error" });
-      console.log("Error in creating a user", error);
-      return res.status(500).json({ error: "Internal Server Error" });
     });
 };
 
