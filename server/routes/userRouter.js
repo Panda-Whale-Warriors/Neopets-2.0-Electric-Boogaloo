@@ -5,7 +5,6 @@ const sessionController = require("../controller/sessionController");
 const router = express.Router();
 
 router.get("/", userController.getAllUsers, (req, res) => {
-router.get("/", userController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.getAllUsers);
 });
 // post req to  sign up, once signed up, redirect to log-in
