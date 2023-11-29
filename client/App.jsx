@@ -1,25 +1,18 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import CreatePage from './components/CreatePage.jsx';
-import { Route, Routes } from 'react-router-dom';
-import PetPage from './components/PetPage.jsx';
-import Login from './components/LoginPage.jsx';
+import React from "react";
+import { useEffect, useState } from "react";
+import CreatePage from "./components/CreatePage.jsx";
+import { Route, Routes } from "react-router-dom";
+import PetPage from "./components/PetPage.jsx";
+import LoginPage from "./components/LoginPage.jsx";
+import SignupPage from "./components/SignupPage.jsx";
+import HomePage from "./components/HomePage.jsx";
 
 const App = () => {
   return (
     <Routes>
-      <Route
-        exact
-        path='/'
-        element={<Login />}
-      />
-
-      <Route
-        exact
-        path='/petpage/:id'
-        element={<PetPage />}
-      />
-      {/* <Route exact path='/login' Component={LoginPage} */}
+      <Route path="/signup" element={<SignupPage />} />
+      <Route path="/homepage" element={<HomePage />} />
+      <Route path="/" element={<LoginPage />} />
     </Routes>
   );
 };

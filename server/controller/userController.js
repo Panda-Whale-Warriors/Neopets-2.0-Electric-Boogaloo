@@ -1,4 +1,5 @@
 const User = require("../model/userModel");
+const User = require("../model/userModel");
 
 const userController = {};
 
@@ -12,6 +13,8 @@ userController.getAllUsers = (req, res, next) => {
       return next();
     })
     .catch((error) => {
+      console.log("Error in getting all users", error);
+      return res.status(500).json({ error: "Internal Server Error" });
       console.log("Error in getting all users", error);
       return res.status(500).json({ error: "Internal Server Error" });
     });
@@ -28,6 +31,8 @@ userController.createUser = (req, res, next) => {
       next();
     })
     .catch((error) => {
+      console.log("Error in creating a user", error);
+      return res.status(500).json({ error: "Internal Server Error" });
       console.log("Error in creating a user", error);
       return res.status(500).json({ error: "Internal Server Error" });
     });
@@ -74,12 +79,16 @@ module.exports = userController;
 /*  // check if user is present or if the user's password is the same as
     // req.body's password, then
     // else, redirect to sign up page
-    if (!user || user.password !== password) {
+    if (!user || user.password !== req.body.password) {
       console.log("this is body", req.body);
-      return res.redirect("/signup");
+      res.locals.message = "not found";
     } else {
-      res.locals._id = user._id;
-      res.locals.username = user.username;
-      res.locals.password = user.password;
-      console.log("you have successfully passed login credentials in");
-      next();*/
+      // res.locals._id = user._id;
+      // res.locals.username = user.username;
+      // res.locals.password = user.password;
+      res.locals.message = "ok";
+    }
+    return next();
+  });
+};
+module.exports = userController;
