@@ -15,8 +15,6 @@ userController.getAllUsers = (req, res, next) => {
     .catch((error) => {
       console.log("Error in getting all users", error);
       return res.status(500).json({ error: "Internal Server Error" });
-      console.log("Error in getting all users", error);
-      return res.status(500).json({ error: "Internal Server Error" });
     });
 };
 
