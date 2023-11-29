@@ -1,14 +1,21 @@
 import React from 'react';
 
 const LoginPage = () => {
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = {};
     data.username = document.getElementById('username').value;
     data.password = document.getElementById('password').value;
-    return fetch('/users', {
+    console.log(data);
+    const response = await fetch('/users', {
       method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
       body: JSON.stringify(data),
     });
+    return response;
   };
 
   return (
