@@ -1,4 +1,4 @@
-const Pet = require("../model/petModel");
+const Pet = require('../model/petModel');
 
 const petController = {};
 
@@ -12,8 +12,8 @@ petController.getPets = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log("Error in getting pets", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.log('Error in getting pets', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
     });
 };
 
@@ -26,8 +26,8 @@ petController.getOnePet = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.error("Error in getting one pet", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.error('Error in getting one pet', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
     });
 };
 
@@ -37,16 +37,16 @@ petController.getOnePet = (req, res, next) => {
 /* const birthday = new Date -- add to pets */
 petController.postPet = (req, res, next) => {
   const { name, picture } = req.body;
-  console.log("--------made it to postPet-------");
+  console.log('--------made it to postPet-------');
   Pet.create({ name, picture })
     .then((pets) => {
       res.locals.postPets = pets;
-      console.log("new pet: ", pets);
+      console.log('new pet: ', pets);
       return next();
     })
     .catch((error) => {
-      console.log("Error in posting pets:", error);
-      return res.status(500).json({ error: "Internet Server Error" });
+      console.log('Error in posting pets:', error);
+      return res.status(500).json({ error: 'Internet Server Error' });
     });
 };
 
@@ -66,12 +66,12 @@ petController.updatePet = (req, res, next) => {
   Pet.findByIdAndUpdate(id, { thirst, hunger, age, life }, { new: true })
     .then((pets) => {
       res.locals.updatePet = pets;
-      console.log("is this hitting updatePet?");
+      console.log('is this hitting updatePet?');
       return next();
     })
     .catch((error) => {
-      console.log("Error in updating pets:", error);
-      return res.status(500).json({ error: "Internet Server Error" });
+      console.log('Error in updating pets:', error);
+      return res.status(500).json({ error: 'Internet Server Error' });
     });
 };
 
@@ -85,20 +85,20 @@ petController.releasePet = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log("Error in releasing a pet:", error);
-      return res.status(500).json({ error: "Internet Server Error" });
+      console.log('Error in releasing a pet:', error);
+      return res.status(500).json({ error: 'Internet Server Error' });
     });
 };
 
 petController.releaseAll = (req, res, next) => {
   Pet.deleteMany()
     .then(() => {
-      console.log("Released all pets");
+      console.log('Released all pets');
       res.status(200).json();
     })
     .catch((error) => {
-      console.log("Error in releasing all pets:", error);
-      return res.status(500).json({ error: "Internet Server Error" });
+      console.log('Error in releasing all pets:', error);
+      return res.status(500).json({ error: 'Internet Server Error' });
     });
 };
 module.exports = petController;

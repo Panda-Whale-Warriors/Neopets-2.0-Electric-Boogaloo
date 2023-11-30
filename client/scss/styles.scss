@@ -54,26 +54,32 @@ picture {
 }
 
 .logout {
-  position: fixed;
-  left: 800px;
-  top: 500px;
+  // position: fixed;
+  // left: 800px;
+  // top: 500px;
+  margin-bottom: 30px;
+  align-self: flex-end;
   height: 200px;
   width: 300px;
 }
 
 .ship {
-  position: fixed;
-  left: 800px;
-  top: 500px;
+  // position: fixed;
+  // left: 800px;
+  // top: 500px;
+  margin-bottom: 30px;
+  align-self: flex-end;
   height: 200px;
   width: 300px;
   z-index: 2;
 }
 
 .logtext {
-  position: absolute;
-  top: 25%;
+  position: relative;
+  bottom: 100%;
   left: 30%;
+  // margin-bottom: 30px;
+  // align-self: flex-start;
   font-size: 30px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-weight: bolder;
@@ -151,8 +157,8 @@ progress[value] {
 
 .modal {
   z-index: 2;
-  width: 300px;
-  height: 400px;
+  width: 600px;
+  height: 450px;
   left: 50%;
   top: 50%;
   position: fixed;
@@ -167,6 +173,27 @@ progress[value] {
   justify-content: center;
   align-items: center;
 
+  #jellyfish-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 450px;
+  }
+
+  .jellyfish-buttons {
+    height: 150px;
+    width: 150px;
+    background-color: aliceblue;
+    border: solid yellow;
+    border-radius: 10px;
+    img {
+      height: 100px;
+      width: 100px;
+    }
+  }
+  .jellyfish-buttons:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
   p {
     font-size: 20px;
   }
@@ -193,7 +220,7 @@ progress[value] {
   display: flex;
 }
 
-#pet {
+.sprite {
   position: absolute;
   left: 150px;
   top: 150px;
@@ -202,11 +229,25 @@ progress[value] {
   z-index: 1;
 }
 
-.jellyfish-buttons {
-  height: 100px;
-  width: 100px;
+#add-more-button {
+  height: 68px;
+  width: 68px;
+  background-color: rgb(120, 200, 120, 0.6);
+  border-radius: 50px;
+  border: none;
+  margin: 20px 25px;
   img {
-    height: 100px;
-    width: 100px;
+    height: 50px;
+    width: 50px;
   }
+}
+#add-more-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.main-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+  height: 100vh;
 }

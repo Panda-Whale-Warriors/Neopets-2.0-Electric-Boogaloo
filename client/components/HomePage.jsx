@@ -20,9 +20,9 @@ const jellyfish = {
 };
 
 const HomePage = () => {
-  const petIndex = useSelector((store) => store.pet.petIndex);
-  const petDirection = useSelector((store) => store.pet.petDirection);
-  const petColor = useSelector((store) => store.pet.petColor);
+  const petIndexList = useSelector((store) => store.pet.petIndexList);
+  const petDirectionList = useSelector((store) => store.pet.petDirectionList);
+  const petColorList = useSelector((store) => store.pet.petColorList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,32 +41,42 @@ const HomePage = () => {
 
   React.useEffect(() => {
     const movementTimer = setTimeout(() => {
-      if (
-        petIndex[0] > 1000 ||
-        petIndex[0] < 150 ||
-        petIndex[1] > 650 ||
-        petIndex[1] < 150
-      ) {
-        dispatch(CHANGE_DIRECTION());
+      for (let i = 0; i < petIndexList.length; i++) {
+        if (
+          petIndexList[i][0] > 1000 ||
+          petIndexList[i][0] < 150 ||
+          petIndexList[i][1] > 650 ||
+          petIndexList[i][1] < 150
+        ) {
+          dispatch(CHANGE_DIRECTION(i));
+        }
       }
       dispatch(PET_MOVE());
     }, 200);
     return () => clearTimeout(movementTimer);
   });
-  const style = {
-    left: `${petIndex[0]}px`,
-    top: `${petIndex[1]}px`,
-  };
+  function mapPets() {
+    const array = [];
+    for (let j = 0; j < petIndexList.length; j++) {
+      array.push(
+        <img
+          className='sprite'
+          key={j}
+          src={jellyfish[petColorList[j]]}
+          style={{
+            left: `${petIndexList[j][0]}px`,
+            top: `${petIndexList[j][1]}px`,
+          }}
+        ></img>
+      );
+    }
+    return array;
+  }
+  const petRenderings = mapPets();
 
   return (
-    <div>
-      <img
-        id='pet'
-        src={
-          'https://i.pinimg.com/originals/d9/cb/5c/d9cb5cd1f0183ffc8fd0b957803fa231.gif'
-        }
-        style={style}
-      ></img>
+    <div className='main-container'>
+      <div>{petRenderings}</div>
       <div className='logout'>
         <img
           className='ship'
@@ -76,6 +86,16 @@ const HomePage = () => {
         <p className='logtext'>LOG OUT</p>
       </div>
       <Modal></Modal>
+      <button
+        id='add-more-button'
+        onClick={() => {
+          document.getElementById('pick-your-pet').classList.add('active');
+          document.getElementById('name-your-pet').classList.add('active');
+          document.getElementById('overlay').classList.add('active');
+        }}
+      >
+        <img src='https://www.svgrepo.com/show/170952/add-button.svg'></img>
+      </button>
     </div>
   );
 };
