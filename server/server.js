@@ -10,8 +10,8 @@ const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
 // handle parsing request body
-app.use(express.json()); // parses body EXCEPT html
 app.use(cookieParser()); // let thy cookies be brought onto thee
+app.use(express.json()); // parses body EXCEPT html
 app.use(express.urlencoded({ extended: true })); // parses html
 
 app.use(

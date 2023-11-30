@@ -14,7 +14,7 @@ router.post(
   authController.loginCookie,
   sessionController.startSession,
   (req, res) => {
-    res.redirect("/create");
+    return res.json(res.locals.message);
   }
 );
 
@@ -25,7 +25,7 @@ router.post(
   authController.loginCookie,
   sessionController.startSession,
   (req, res) => {
-    res.redirect("/create");
+    return res.json(res.locals.message);
   }
 );
 

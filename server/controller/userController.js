@@ -1,5 +1,4 @@
 const User = require("../model/userModel");
-const User = require("../model/userModel");
 
 const userController = {};
 
@@ -26,7 +25,8 @@ userController.createUser = (req, res, next) => {
   User.create({ username, password })
     .then((user) => {
       res.locals.createUser = user.username;
-      next();
+      res.locals.message = "ok";
+      return next();
     })
     .catch((error) => {
       console.log("Error in creating a user", error);
@@ -48,7 +48,9 @@ userController.verifyUser = async (req, res, next) => {
     // if no users are found in database, redirect back to signup
     if (!user) {
       console.log("No user found by that name");
-      return res.redirect("/signup");
+      // return res.redirect("/signup");
+      res.locals.message = "username not found";
+      return next();
     }
     console.log("about to run bcrypt password compare");
     // using bcrypt comparePassword method to check if passwords match
@@ -57,10 +59,13 @@ userController.verifyUser = async (req, res, next) => {
     // if passwords DO NOT match, redirect user to the login page to try again
     if (!passwordMatch) {
       console.log("User Verification failed");
-      return res.redirect("/login");
+      // return res.redirect("/login");
+      res.locals.message = "password and username do not match";
+      return next();
     }
 
     // if no other conditionals were hit, return next() to move on to next middleware.
+    res.locals.message = "ok";
     return next();
   } catch (err) {
     next({
@@ -88,3 +93,4 @@ module.exports = userController;
   });
 };
 module.exports = userController;
+*/

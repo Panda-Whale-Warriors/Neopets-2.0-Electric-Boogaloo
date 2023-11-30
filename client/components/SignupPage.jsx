@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const handleSubmit = async () => {
     const data = {};
     data.username = document.getElementById("username-signup").value;
@@ -15,7 +17,10 @@ const SignupPage = () => {
       },
       body: JSON.stringify(data),
     });
-    return response;
+    const result = await response.json();
+    console.log("result---->", result);
+    // if (result === "username not found") return navigate("/signup");
+    if (result === "ok") return navigate("/homepage");
   };
 
   return (
