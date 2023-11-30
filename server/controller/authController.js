@@ -8,16 +8,20 @@ authController.loginCookie = async (req, res, next) => {
   //console.log(res._header);
 
   try {
-    const { username } = req.body;
-    // const newUser = req.body;
-    const currentUser = await User.findOne({ username: username });
-    console.log("user found in login cookies");
-    const curUserId = currentUser._id;
-    if (currentUser) {
-      res.cookie("ssid", `${curUserId}`, { httpOnly: true });
-      console.log("res.cookie was run");
-      res.locals.ssid = curUserId;
+    if (res.locals.message === "username not found") {
       return next();
+    } else {
+      const { username } = req.body;
+      // const newUser = req.body;
+      const currentUser = await User.findOne({ username: username });
+      console.log("user found in login cookies");
+      const curUserId = currentUser._id;
+      if (currentUser) {
+        res.cookie("ssid", `${curUserId}`, { httpOnly: true });
+        console.log("res.cookie was run");
+        res.locals.ssid = curUserId;
+        return next();
+      }
     }
   } catch (err) {
     next("Error in authController.loginCookie" + JSON.stringify(err));

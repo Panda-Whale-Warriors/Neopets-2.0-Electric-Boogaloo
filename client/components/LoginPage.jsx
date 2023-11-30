@@ -18,8 +18,8 @@ const LoginPage = () => {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    console.log(result);
-    if (result === "not found") return navigate("/signup");
+    console.log("result", result);
+    if (result === "username not found") return navigate("/signup");
     if (result === "ok") return navigate("/homepage");
     // return response;
   };

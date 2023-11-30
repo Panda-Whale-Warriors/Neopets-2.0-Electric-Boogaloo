@@ -35,14 +35,18 @@ sessionController.isLoggedIn = async (req, res, next) => {
 sessionController.startSession = async (req, res, next) => {
   //write code here
   try {
-    console.log("locating cookie....");
-    // its only on request initially
-    // const ssid = req.cookies.ssid;
-    const ssid = res.locals.ssid;
-    console.log("ssid", ssid);
-    await Session.create({ cookieId: ssid });
-    console.log("session created");
-    return next();
+    if (res.locals.message === "username not found") {
+      return next();
+    } else {
+      console.log("locating cookie....");
+      // its only on request initially
+      // const ssid = req.cookies.ssid;
+      const ssid = res.locals.ssid;
+      console.log("ssid", ssid);
+      await Session.create({ cookieId: ssid });
+      console.log("session created");
+      return next();
+    }
   } catch (err) {
     return next(
       "Error in sessionController.startSession: " + JSON.stringify(err)
