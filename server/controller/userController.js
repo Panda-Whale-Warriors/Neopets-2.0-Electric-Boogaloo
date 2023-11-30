@@ -1,4 +1,6 @@
-const User = require("../model/userModel");
+const User = require('../model/userModel');
+const Session = require('../model/sessionModel');
+const Pet = require('../model/petModel');
 
 const userController = {};
 
@@ -12,25 +14,25 @@ userController.getAllUsers = (req, res, next) => {
       return next();
     })
     .catch((error) => {
-      console.log("Error in getting all users", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.log('Error in getting all users', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
     });
 };
 
 //  createUser - create and save a new User into the database.
 userController.createUser = (req, res, next) => {
   const { username, password } = req.body;
-  console.log("username: ", username);
-  console.log("password: ", password);
+  console.log('username: ', username);
+  console.log('password: ', password);
   User.create({ username, password })
     .then((user) => {
       res.locals.createUser = user.username;
-      res.locals.message = "ok";
+      res.locals.message = 'ok';
       return next();
     })
     .catch((error) => {
-      console.log("Error in creating a user", error);
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.log('Error in creating a user', error);
+      return res.status(500).json({ error: 'Internal Server Error' });
     });
 };
 
@@ -44,34 +46,34 @@ userController.verifyUser = async (req, res, next) => {
   try {
     // attempt to find user in database by username
     const user = await User.findOne({ username: username });
-    console.log("here is the user from DB", user);
+    console.log('here is the user from DB', user);
     // if no users are found in database, redirect back to signup
     if (!user) {
-      console.log("No user found by that name");
+      console.log('No user found by that name');
       // return res.redirect("/signup");
-      res.locals.message = "username not found";
+      res.locals.message = 'username not found';
       return next();
     }
-    console.log("about to run bcrypt password compare");
+    console.log('about to run bcrypt password compare');
     // using bcrypt comparePassword method to check if passwords match
     const passwordMatch = await user.comparePassword(password);
-    console.log("password compare completed....");
+    console.log('password compare completed....');
     // if passwords DO NOT match, redirect user to the login page to try again
     if (!passwordMatch) {
-      console.log("User Verification failed");
+      console.log('User Verification failed');
       // return res.redirect("/login");
-      res.locals.message = "password and username do not match";
+      res.locals.message = 'password and username do not match';
       return next();
     }
 
     // if no other conditionals were hit, return next() to move on to next middleware.
-    res.locals.message = "ok";
+    res.locals.message = 'ok';
     return next();
   } catch (err) {
     next({
-      log: "Express error handler caught error in userController middleware",
+      log: 'Express error handler caught error in userController middleware',
       status: 500,
-      message: { err: "Unable to verify user data" },
+      message: { err: 'Unable to verify user data' },
     });
   }
 };

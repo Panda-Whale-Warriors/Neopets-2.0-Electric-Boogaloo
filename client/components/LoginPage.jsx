@@ -25,62 +25,22 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login">
-      <h1>{"Login"}</h1>
-      <label>
-        Username:
-        <input type="text" id="username" />
-      </label>
-      <label>
-        Password:
-        <input type="password" id="password" />
-      </label>
-      <button className="button" id="login-button" onClick={handleSubmit}>
-        LOG IN
-      </button>
-      {/* {isLoginPage ? 'Login' : 'Signup'} */}
-      {/* {!isLoginPage && (
+    <div class="LoginPage">
+      <div class="login">
+        <h1>{"Login"}</h1>
         <label>
-          Confirm Password:
-          <input
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            value={passwordConfirm}
-            type='password'
-            name='name'
-          />
+          Username:
+          <input type="text" id="username" />
         </label>
-      )}
-      {isLoginPage ? (
-        <p>
-          Not signed up?{' '}
-          <span
-            className='highlighted'
-            onClick={() => {
-              setUsername('');
-              setPassword('');
-              setPasswordConfirm('');
-              setIsLoginPage(!isLoginPage);
-            }}
-          >
-            Sign Up
-          </span>
-        </p>
-      ) : (
-        <p>
-          Already a member?{' '}
-          <span
-            className='highlighted'
-            onClick={() => {
-              setUsername('');
-              setPassword('');
-              setPasswordConfirm('');
-              setIsLoginPage(!isLoginPage);
-            }}
-          >
-            Login
-          </span>
-        </p>
-      )} */}
+        <label>
+          Password:
+          <input type="password" id="password" />
+        </label>
+        <button className="button" id="login-button" onClick={handleSubmit}>
+          LOG IN
+        </button>
+      </div>
+      <img class="whale" src="https://i.postimg.cc/yxqqGdWN/panda.png"></img>
     </div>
   );
 };

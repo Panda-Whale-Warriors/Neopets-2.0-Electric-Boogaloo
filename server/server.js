@@ -1,13 +1,13 @@
-const express = require("express");
-const path = require("path");
-const createRouter = require("./routes/createRouter");
-const userRouter = require("./routes/userRouter");
-const petPageRouter = require("./routes/petPageRouter");
+const express = require('express');
+const path = require('path');
+const createRouter = require('./routes/createRouter');
+const userRouter = require('./routes/userRouter');
+const petPageRouter = require('./routes/petPageRouter');
 const app = express();
-const cors = require("cors");
-require("dotenv").config();
-const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
+const cors = require('cors');
+require('dotenv').config();
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 // handle parsing request body
 app.use(cookieParser()); // let thy cookies be brought onto thee
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true })); // parses html
 
 app.use(
   cors({
-    origin: "http://localhost:8080",
+    origin: 'http://localhost:8080',
     credentials: true,
   })
 );
@@ -26,29 +26,32 @@ app.use(
 // app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
 // serve log-in.html on /
 
-app.get("/", (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
+app.get('/', (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 // serve index.html on the route for /create
-app.get("/create", (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
-});
+// app.get('/create', (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+// });
 
 // handle api router
-app.use("/users", userRouter);
-app.use("/create", createRouter);
+app.use('/users', userRouter);
+app.use('/create', createRouter);
 // app.use('/petPage', petPageRouter);
 
 // handle all route handler error for reqs (404)
-app.use("*", (req, res) => res.status(404).send("this is not the right page"));
+app.use('*', (req, res) => {
+  console.log(req.url);
+  res.status(404).send('this is not the right page');
+});
 
 // global error
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log: "Express error handler caught unknown middleware error",
+    log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: "An error occurred" },
+    message: { err: 'An error occurred' },
   };
   const errorObj = Object.assign({}, defaultErr, err);
   console.log(errorObj.log);
@@ -57,11 +60,11 @@ app.use((err, req, res, next) => {
 
 // listen for port & connect mongoose db
 app.listen(3000, async () => {
-  console.log("Server started listening on port: 3000");
+  console.log('Server started listening on port: 3000');
   try {
     // console.log(process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI, {});
-    console.log("Connected to Mongo DB.");
+    console.log('Connected to Mongo DB.');
   } catch (error) {
     console.log(error);
   }

@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/", userController.getAllUsers, (req, res) => {
   res.status(200).json(res.locals.getAllUsers);
 });
+
 // post req to  sign up, once signed up, redirect to log-in
 router.post(
   "/signup",
@@ -30,6 +31,6 @@ router.post(
 );
 
 router.delete("/", sessionController.logOut, (req, res) => {
-  return res.redirect("/login");
+  return res.json(res.locals.loggedOut);
 });
 module.exports = router;
