@@ -20,6 +20,7 @@ router.get('/pets/:id', petController.getOnePet, (req, res) => {
 // router.post('/', petController.postPet, (req, res) => {
 // creates a new pet with current user Id
 //in testing stage
+
 router.post('/pets', petController.postPet, (req, res) => {
   return res.status(200).json(res.locals.postPets);
 });
