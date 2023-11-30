@@ -34,8 +34,11 @@ userController.createUser = (req, res, next) => {
 // verifyUser - Obtain username and password from the request body, locate
 //  * the appropriate user in the database, and then authenticate the submitted password
 //  * against the password stored in the database.
-userController.verifyUser = (req, res, next) => {
-	User.findOne({ username: res.body.username }).then((user) => {
+userController.verifyUser = async (req, res, next) => {
+	const { username, password } = req.body;
+	const user = await User.findOne({ username: req.body.username })
+	
+	.then((user) => {
 		// check if user is present or if the user's password is the same as
 		// req.body's password, then
 		// else, redirect to sign up page
