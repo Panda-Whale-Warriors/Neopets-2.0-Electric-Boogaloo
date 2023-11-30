@@ -8,6 +8,20 @@ const HomePage = () => {
   const petIndex = useSelector((store) => store.pet.petIndex);
   const petDirection = useSelector((store) => store.pet.petDirection);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logOut = async () => {
+    const response = await fetch("/users", {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    return navigate("/");
+  };
 
   React.useEffect(() => {
     const movementTimer = setTimeout(() => {
@@ -37,6 +51,14 @@ const HomePage = () => {
         }
         style={style}
       ></img>
+      <div className="logout">
+        <img
+          className="ship"
+          src="https://cdn.pixabay.com/photo/2014/12/21/23/43/shipwreck-575907_960_720.png"
+          onClick={logOut}
+        ></img>
+        <p className="logtext">LOG OUT</p>
+      </div>
     </div>
   );
 };

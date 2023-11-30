@@ -31,6 +31,6 @@ router.post(
 );
 
 router.delete("/", sessionController.logOut, (req, res) => {
-  return res.redirect("/login");
+  return res.json(res.locals.loggedOut);
 });
 module.exports = router;
