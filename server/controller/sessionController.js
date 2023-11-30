@@ -66,6 +66,7 @@ sessionController.logOut = async (req, res, next) => {
     console.log("ssid cookie cleared from browser");
     // console.log("req.cookies", req.cookies);
     // res.redirect("/login");
+    res.locals.loggedOut = true;
     return next();
   } catch (err) {
     return next({

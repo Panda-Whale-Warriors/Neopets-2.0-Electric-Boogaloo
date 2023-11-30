@@ -16,7 +16,7 @@ module.exports = {
     port: 8080,
     historyApiFallback: true,
     headers: { "Access-Control-Allow-Origin": "*" },
-    proxy: { "/**": { target: "http://localhost:3000", secure: false } },
+    proxy: { "/users/**": { target: "http://localhost:3000", secure: false } },
   },
   plugins: [
     new HTMLWebpackPlugin({
