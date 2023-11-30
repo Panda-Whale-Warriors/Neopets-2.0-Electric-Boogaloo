@@ -38,15 +38,17 @@ petController.getPets = async (req, res, next) => {
 
 // get one pet by id
 petController.getOnePet = async (req, res, next) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+    console.log('id---->', id);
     const pet = await Pet.findById(id);
 
+    console.log('pet-->>', pet);
     res.locals.getOnePet = pet;
     return next();
   } catch (err) {
     return next({
-      log: 'Express error handler caught error in petController.getOnePet middleware',
+      log: 'Express terror handler caught error in petController.getOnePet middleware',
       status: 500,
       message: { err: 'Unable to pull pet data from database' },
     });
@@ -59,13 +61,15 @@ petController.getOnePet = async (req, res, next) => {
 /* const birthday = new Date -- add to pets */
 petController.postPet = async (req, res, next) => {
   //How do we retrieve the active user, and set owner to be the property
-
+  console.log('REQ.BODY: ', req.body);
   const { name, picture } = req.body;
   const { ssid } = req.cookies;
-  console.log('name', name);
+  console.log('name: ', name);
+  console.log('picture: ', picture);
   try {
     const owner = await User.findOne({ _id: ssid });
     console.log('--------made it to postPet-------');
+    console.log('name: ', name, 'picture: ', picture);
     const pets = await Pet.create({
       name: name,
       picture: picture,

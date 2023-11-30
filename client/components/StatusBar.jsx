@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 
 function StatusBar() {
   // set states for both hunger and thirst
@@ -35,7 +35,7 @@ function StatusBar() {
           console.log(data.hunger);
         }
       })
-      .catch((error) => console.log("Error fetching values:", error));
+      .catch((error) => console.log('Error fetching values:', error));
 
     const decreaseHungerThirst = setInterval(() => {
       setHunger((prevHunger) => Math.max(prevHunger - 5, 0));
@@ -48,10 +48,10 @@ function StatusBar() {
   // update the server side values
   const updateServerValues = (updatedValues) => {
     fetch(`http://localhost:3000/create/pets/${id}`, {
-      method: "PATCH",
-      mode: "cors",
+      method: 'PATCH',
+      mode: 'cors',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedValues),
     })
@@ -60,14 +60,17 @@ function StatusBar() {
         setHunger(updatedData.hunger);
         setThirst(updatedData.thirst);
       })
-      .catch((error) => console.log("Error updating: ", error));
+      .catch((error) => console.log('Error updating: ', error));
   };
   // render
 
   return (
     <div>
-      <span id="hunger">Hunger:</span>
-      <progress value={hunger} max="100"></progress>
+      <span id='hunger'>Hunger:</span>
+      <progress
+        value={hunger}
+        max='100'
+      ></progress>
     </div>
   );
 }
