@@ -1,26 +1,26 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./client/index.js",
+  entry: './client/index.js',
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
   },
   devServer: {
-    host: "localhost",
+    host: 'localhost',
     static: {
-      publicPath: "/build",
-      directory: path.resolve(__dirname, "build"),
+      publicPath: '/build',
+      directory: path.resolve(__dirname, 'build'),
     },
     port: 8080,
     historyApiFallback: true,
-    headers: { "Access-Control-Allow-Origin": "*" },
-    proxy: { "/users/**": { target: "http://localhost:3000", secure: false } },
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    proxy: { '/users/**': { target: 'http://localhost:3000', secure: false } },
   },
   plugins: [
     new HTMLWebpackPlugin({
-      template: "./client/index.html",
+      template: './client/index.html',
     }),
   ],
   mode: process.env.NODE_ENV,
@@ -30,25 +30,25 @@ module.exports = {
         test: /\.jsx?/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
       },
       {
         test: /\.scss/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "fonts/",
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
             },
           },
         ],
@@ -56,9 +56,9 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
-          "file-loader",
+          'file-loader',
           {
-            loader: "image-webpack-loader",
+            loader: 'image-webpack-loader',
             options: {
               bypassOnDebug: true,
               disable: true,
@@ -69,6 +69,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx", ".scss"],
+    extensions: ['.js', '.jsx', '.scss'],
   },
 };
