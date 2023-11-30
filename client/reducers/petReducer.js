@@ -1,41 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const getInitialState = async () => {
-  //array of objects, object has all properites in pet model
-  const response = await fetch('/create/pets');
-  const result = await response.json();
-  console.log(result);
-  const initialState = {
-    petIndexList: [],
-    petDirectionList: [],
-    petColorList: [],
-  };
-
-  const directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-
-  for (let pet of result) {
-    initialState.petIndexList.push([150, 150]);
-    initialState.petDirectionList.push(
-      directionArray[Math.floor(Math.random() * directionArray.length)]
-    );
-    initialState.petColorList.push(pet.picture);
-  }
-  console.log('initialState: ', initialState);
-  console.log('indexList: ', initialState.petIndexList);
-  return initialState;
-};
-
 // const initialState = getInitialState();
 const initialState = {
   petIndexList: [],
   petDirectionList: [],
   petColorList: [],
+  petNameList: [],
+  petIDList: [],
 };
 
 const petSlice = createSlice({
   name: 'pets',
   initialState: initialState,
   reducers: {
+    RESET_STATE: (state, action) => {
+      state.petIndexList = [];
+      state.petDirectionList = [];
+      state.petColorList = [];
+      state.petNameList = [];
+      state.petIDList = [];
+    },
     PET_MOVE: (state, action) => {
       const copy = [...state.petIndexList];
       for (let i = 0; i < state.petIndexList.length; i++) {
@@ -116,7 +100,8 @@ const petSlice = createSlice({
     },
     CHOOSE_NEW_PET: (state, action) => {
       const directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-      const colorChoice = action.payload;
+      const colorChoice = action.payload[0];
+      const name = action.payload[1];
       const colorListCopy = [...state.petColorList];
       colorListCopy.push(colorChoice);
       const petIndexListCopy = [...state.petIndexList];
@@ -125,9 +110,12 @@ const petSlice = createSlice({
       directionListCopy.push(
         directionArray[Math.floor(Math.random() * directionArray.length)]
       );
+      const namesListCopy = [...state.petNameList];
+      namesListCopy.push(name);
       state.petColorList = colorListCopy;
       state.petIndexList = petIndexListCopy;
       state.petDirectionList = directionListCopy;
+      state.petNameList = namesListCopy;
     },
     POPULATE_SCREEN: (state, action) => {
       const result = action.payload;
@@ -137,6 +125,8 @@ const petSlice = createSlice({
       let copyPetIndexList = state.petIndexList;
       let copyPetDirectionList = state.petDirectionList;
       let copyPetColorList = state.petColorList;
+      let copyPetNameList = state.petNameList;
+      let copyPetIDList = state.petIDList;
 
       for (let pet of result) {
         copyPetIndexList.push([150, 150]);
@@ -144,14 +134,23 @@ const petSlice = createSlice({
           directionArray[Math.floor(Math.random() * directionArray.length)]
         );
         copyPetColorList.push(pet.picture);
+        copyPetNameList.push(pet.name);
+        copyPetIDList.push(pet.id);
       }
       state.petIndexList = copyPetIndexList;
       state.petDirectionList = copyPetDirectionList;
       state.petColorList = copyPetColorList;
+      state.petNameList = copyPetNameList;
+      state.petIDList = copyPetIDList;
     },
   },
 });
 
-export const { PET_MOVE, CHANGE_DIRECTION, CHOOSE_NEW_PET, POPULATE_SCREEN } =
-  petSlice.actions;
+export const {
+  PET_MOVE,
+  CHANGE_DIRECTION,
+  CHOOSE_NEW_PET,
+  POPULATE_SCREEN,
+  RESET_STATE,
+} = petSlice.actions;
 export default petSlice.reducer;

@@ -51,11 +51,11 @@ const Modal = () => {
   return (
     <div>
       <div
-        className='overlay active'
+        className='overlay'
         id='overlay'
       ></div>
       <div
-        className='modal active'
+        className='modal'
         id='name-your-pet'
       >
         <h4>Name your pet:</h4>
@@ -74,14 +74,15 @@ const Modal = () => {
             console.log('picture---', picture);
             document.getElementById('name-your-pet').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
-            dispatch(CHOOSE_NEW_PET(picture));
+            const name = document.getElementById('petname').value;
+            dispatch(CHOOSE_NEW_PET([picture, name]));
             return fetch('/create/pets', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                name: document.getElementById('petname').value,
+                name: name,
                 picture: picture,
               }),
             });
@@ -91,7 +92,7 @@ const Modal = () => {
         </button>
       </div>
       <div
-        className='modal active'
+        className='modal'
         id='pick-your-pet'
       >
         <p>
