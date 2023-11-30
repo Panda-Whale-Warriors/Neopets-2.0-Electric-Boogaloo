@@ -1,18 +1,18 @@
 html,
 body {
-  margin: 0;
+  // margin: 0;
   font-size: 18px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  width: 100vw;
-  height: 100vh;
-  background-color: aqua;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  // width: 100vw;
+  // height: 100vh;
+  // background-color: aqua;
   display: flex;
   justify-content: center;
 }
 
 body {
-  background: url("https://i.vimeocdn.com/video/1474786825-5c6b95c836a25c485d552c686d296c6eec8f95d8ab0da56177a55cfff0ddd141-d_640x360.jpg");
+  background: url('https://i.vimeocdn.com/video/1474786825-5c6b95c836a25c485d552c686d296c6eec8f95d8ab0da56177a55cfff0ddd141-d_640x360.jpg');
   background-size: 100%;
   background-position: cover;
 }
@@ -53,25 +53,13 @@ picture {
   height: 100px;
 }
 
-.main-container {
-}
-
-#pet {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  height: 100px;
-  width: 100px;
-  z-index: 2;
-}
-
 form input {
   display: block;
   height: 50px;
   width: 100%;
 }
 
-form input[type="radio"] {
+form input[type='radio'] {
   height: 1rem;
   width: 1rem;
 }
@@ -117,4 +105,66 @@ progress[value] {
   color: black;
   font-size: 18px;
   width: 100%;
+}
+
+.modal {
+  z-index: 2;
+  width: 300px;
+  height: 400px;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  background-color: yellow;
+  font-size: 20px;
+  transform: scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 20px;
+  }
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+  margin: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.8;
+  display: none;
+  z-index: 1;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+#pet {
+  position: absolute;
+  left: 150px;
+  top: 150px;
+  height: 100px;
+  width: 100px;
+  z-index: 1;
+}
+
+.jellyfish-buttons {
+  height: 100px;
+  width: 100px;
+  img {
+    height: 100px;
+    width: 100px;
+  }
 }
