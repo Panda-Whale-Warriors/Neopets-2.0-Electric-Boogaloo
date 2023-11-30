@@ -1,2 +1,2 @@
 # scratch-project-pet
-Team Goblin Shark's scratch project.
+Team Panda Whale's Iteration Project
