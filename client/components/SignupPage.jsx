@@ -24,19 +24,22 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="signup">
-      <h1>{"Sign UP"}</h1>
-      <label>
-        Username:
-        <input type="text" id="username-signup" />
-      </label>
-      <label>
-        Password:
-        <input type="text" id="password-signup" />
-      </label>
-      <button className="button" id="signup-button" onClick={handleSubmit}>
-        SIGN UP
-      </button>
+    <div class="LoginPage">
+      <div className="login">
+        <h1>{"Sign UP"}</h1>
+        <label>
+          Username:
+          <input type="text" id="username-signup" />
+        </label>
+        <label>
+          Password:
+          <input type="text" id="password-signup" />
+        </label>
+        <button className="button" id="signup-button" onClick={handleSubmit}>
+          SIGN UP
+        </button>
+      </div>
+      <img class="whale" src="https://i.postimg.cc/yxqqGdWN/panda.png"></img>
     </div>
   );
 };

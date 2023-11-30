@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import StatusBar from './StatusBar.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from './Modal.jsx';
 import { PET_MOVE, CHANGE_DIRECTION } from '../reducers/petReducer.js';
@@ -73,10 +73,20 @@ const HomePage = () => {
     return array;
   }
   const petRenderings = mapPets();
+  const statusStyle = {
+    left: `${petIndex[0]}px`,
+    top: `${petIndex[1] - 60}px`,
+  };
 
   return (
     <div className='main-container'>
       <div>{petRenderings}</div>
+      <div
+        class='status'
+        style={statusStyle}
+      >
+        <StatusBar />
+      </div>
       <div className='logout'>
         <img
           className='ship'
