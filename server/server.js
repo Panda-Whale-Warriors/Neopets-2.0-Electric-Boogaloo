@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 });
 
 // serve index.html on the route for /create
-app.get('/create', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-});
+// app.get('/create', (req, res) => {
+//   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+// });
 
 // handle api router
 app.use('/users', userRouter);

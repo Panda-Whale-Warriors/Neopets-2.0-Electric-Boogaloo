@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import StatusBar from './StatusBar.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from './Modal.jsx';
-import { PET_MOVE, CHANGE_DIRECTION } from '../reducers/petReducer.js';
+import {
+  PET_MOVE,
+  CHANGE_DIRECTION,
+  POPULATE_SCREEN,
+} from '../reducers/petReducer.js';
 
 const jellyfish = {
   yellow:
@@ -17,6 +21,12 @@ const jellyfish = {
   blue: 'https://cdn.discordapp.com/attachments/317784599612882945/1179559036430065765/d9cb5cd1f0183ffc8fd0b957803fa231_3.gif?ex=657a38f5&is=6567c3f5&hm=b497a665b61756f9eff562a09774d8aa6340857dbffb54c959f18b8507947b2d&',
   purple:
     'https://i.pinimg.com/originals/d9/cb/5c/d9cb5cd1f0183ffc8fd0b957803fa231.gif',
+  rainbow:
+    'https://media.discordapp.net/attachments/317784599612882945/1179589281329721475/d9cb5cd1f0183ffc8fd0b957803fa231_12.gif?ex=657a5520&is=6567e020&hm=173b8cf9d7154bb73df319a63511192d28d8a41328878e989009810c7d55cf70&=',
+  orange:
+    'https://media.discordapp.net/attachments/317784599612882945/1179583647121158196/d9cb5cd1f0183ffc8fd0b957803fa231_11.gif?ex=657a4fe1&is=6567dae1&hm=83d562d26c54af0cf23e072f4add471c87efad64fa0b0232b319a2559089f3c0&=',
+  transparent:
+    'https://media.discordapp.net/attachments/317784599612882945/1179838180644634745/d9cb5cd1f0183ffc8fd0b957803fa231_11_1.gif?ex=657b3cee&is=6568c7ee&hm=6a24732252487f6931b87f802fa077be64723ee71ec6a6a0909a00604990d030&=',
 };
 
 const HomePage = () => {
@@ -32,7 +42,6 @@ const HomePage = () => {
 
       headers: {
         'Content-Type': 'application/json',
-        // 'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
 
@@ -40,6 +49,18 @@ const HomePage = () => {
   };
 
   React.useEffect(() => {
+    const petFunc = async () => {
+      const response = await fetch('/create/pets');
+      const result = await response.json();
+      console.log(result);
+      dispatch(POPULATE_SCREEN(result));
+    };
+
+    petFunc();
+  }, []);
+
+  React.useEffect(() => {
+    //array of objects, object has all properites in pet model
     const movementTimer = setTimeout(() => {
       for (let i = 0; i < petIndexList.length; i++) {
         if (
@@ -55,38 +76,56 @@ const HomePage = () => {
     }, 200);
     return () => clearTimeout(movementTimer);
   });
+
   function mapPets() {
     const array = [];
+
     for (let j = 0; j < petIndexList.length; j++) {
+      // const statusStyle = {
+      //   left: `${petIndexList[j][0]}px`,
+      //   top: `${petIndexList[j][1] - 60}px`,
+      // };
       array.push(
-        <img
-          className='sprite'
-          key={j}
-          src={jellyfish[petColorList[j]]}
-          style={{
-            left: `${petIndexList[j][0]}px`,
-            top: `${petIndexList[j][1]}px`,
-          }}
-        ></img>
+        <div key={'sprite' + j}>
+          <img
+            className='sprite'
+            key={j}
+            src={jellyfish[petColorList[j]]}
+            style={{
+              left: `${petIndexList[j][0]}px`,
+              top: `${petIndexList[j][1]}px`,
+            }}
+          ></img>
+
+          <div
+            className='status'
+            style={{
+              left: `${petIndexList[j][0]}px`,
+              top: `${petIndexList[j][1] - 60}px`,
+            }}
+          >
+            <StatusBar />
+          </div>
+        </div>
       );
     }
     return array;
   }
   const petRenderings = mapPets();
-  const statusStyle = {
-    left: `${petIndex[0]}px`,
-    top: `${petIndex[1] - 60}px`,
-  };
+  // const statusStyle = {
+  //   left: `${petIndex[0]}px`,
+  //   top: `${petIndex[1] - 60}px`,
+  // };
 
   return (
     <div className='main-container'>
       <div>{petRenderings}</div>
-      <div
+      {/* <div
         class='status'
         style={statusStyle}
       >
         <StatusBar />
-      </div>
+      </div> */}
       <div className='logout'>
         <img
           className='ship'

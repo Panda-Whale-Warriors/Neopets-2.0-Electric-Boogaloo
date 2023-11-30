@@ -1,9 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getInitialState = async () => {
+  //array of objects, object has all properites in pet model
+  const response = await fetch('/create/pets');
+  const result = await response.json();
+  console.log(result);
+  const initialState = {
+    petIndexList: [],
+    petDirectionList: [],
+    petColorList: [],
+  };
+
+  const directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+  for (let pet of result) {
+    initialState.petIndexList.push([150, 150]);
+    initialState.petDirectionList.push(
+      directionArray[Math.floor(Math.random() * directionArray.length)]
+    );
+    initialState.petColorList.push(pet.picture);
+  }
+  console.log('initialState: ', initialState);
+  console.log('indexList: ', initialState.petIndexList);
+  return initialState;
+};
+
+// const initialState = getInitialState();
 const initialState = {
-  petIndexList: [[150, 150]],
-  petDirectionList: ['SE'],
-  petColorList: ['purple'],
+  petIndexList: [],
+  petDirectionList: [],
+  petColorList: [],
 };
 
 const petSlice = createSlice({
@@ -103,8 +129,29 @@ const petSlice = createSlice({
       state.petIndexList = petIndexListCopy;
       state.petDirectionList = directionListCopy;
     },
+    POPULATE_SCREEN: (state, action) => {
+      const result = action.payload;
+      console.log(action.payload);
+      const directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+
+      let copyPetIndexList = state.petIndexList;
+      let copyPetDirectionList = state.petDirectionList;
+      let copyPetColorList = state.petColorList;
+
+      for (let pet of result) {
+        copyPetIndexList.push([150, 150]);
+        copyPetDirectionList.push(
+          directionArray[Math.floor(Math.random() * directionArray.length)]
+        );
+        copyPetColorList.push(pet.picture);
+      }
+      state.petIndexList = copyPetIndexList;
+      state.petDirectionList = copyPetDirectionList;
+      state.petColorList = copyPetColorList;
+    },
   },
 });
 
-export const { PET_MOVE, CHANGE_DIRECTION, CHOOSE_NEW_PET } = petSlice.actions;
+export const { PET_MOVE, CHANGE_DIRECTION, CHOOSE_NEW_PET, POPULATE_SCREEN } =
+  petSlice.actions;
 export default petSlice.reducer;
