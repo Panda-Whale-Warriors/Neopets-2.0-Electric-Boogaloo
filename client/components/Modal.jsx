@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { CHOOSE_NEW_PET } from '../reducers/petReducer.js';
 
 const jellyfish = {
   yellow:
@@ -16,11 +17,19 @@ const jellyfish = {
 };
 
 const Modal = () => {
+  const dispatch = useDispatch();
   function mapJellyfishButtons() {
     const array = [];
     for (let color in jellyfish) {
       array.push(
-        <button className='jellyfish-buttons'>
+        <button
+          key={color}
+          className='jellyfish-buttons'
+          onClick={() => {
+            document.getElementById('pick-your-pet').classList.remove('active');
+            dispatch(CHOOSE_NEW_PET(color));
+          }}
+        >
           <img src={jellyfish[color]}></img>
         </button>
       );
@@ -65,16 +74,7 @@ const Modal = () => {
         <p>
           <strong>Pick your pet:</strong>
         </p>
-        <div>{jellyfishButtons}</div>
-        <button
-          className='button'
-          id='next-button'
-          onClick={() => {
-            document.getElementById('pick-your-pet').classList.remove('active');
-          }}
-        >
-          NEXT
-        </button>
+        <div id='jellyfish-buttons-container'>{jellyfishButtons}</div>
       </div>
     </div>
   );

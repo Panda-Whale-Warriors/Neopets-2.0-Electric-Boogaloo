@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  petIndex: [150, 150],
-  petDirection: 'SE',
+  petIndexList: [[150, 150]],
+  petDirectionList: ['SE'],
+  petColorList: ['purple'],
 };
 
 const petSlice = createSlice({
@@ -10,47 +11,52 @@ const petSlice = createSlice({
   initialState: initialState,
   reducers: {
     PET_MOVE: (state, action) => {
-      const copy = [...state.petIndex];
-      if (state.petDirection === 'N') {
-        copy[1] -= 10;
+      const copy = [...state.petIndexList];
+      for (let i = 0; i < state.petIndexList.length; i++) {
+        if (state.petDirectionList[i] === 'N') {
+          copy[i][1] -= 10;
+        }
+        if (state.petDirectionList[i] === 'NE') {
+          copy[i][0] += 10;
+          copy[i][1] -= 10;
+        }
+        if (state.petDirectionList[i] === 'E') {
+          copy[i][0] += 10;
+        }
+        if (state.petDirectionList[i] === 'SE') {
+          copy[i][0] += 10;
+          copy[i][1] += 10;
+        }
+        if (state.petDirectionList[i] === 'S') {
+          copy[i][1] += 10;
+        }
+        if (state.petDirectionList[i] === 'SW') {
+          copy[i][0] -= 10;
+          copy[i][1] += 10;
+        }
+        if (state.petDirectionList[i] === 'W') {
+          copy[i][0] -= 10;
+        }
+        if (state.petDirectionList[i] === 'NW') {
+          copy[i][0] -= 10;
+          copy[i][1] -= 10;
+        }
       }
-      if (state.petDirection === 'NE') {
-        copy[0] += 10;
-        copy[1] -= 10;
-      }
-      if (state.petDirection === 'E') {
-        copy[0] += 10;
-      }
-      if (state.petDirection === 'SE') {
-        copy[0] += 10;
-        copy[1] += 10;
-      }
-      if (state.petDirection === 'S') {
-        copy[1] += 10;
-      }
-      if (state.petDirection === 'SW') {
-        copy[0] -= 10;
-        copy[1] += 10;
-      }
-      if (state.petDirection === 'W') {
-        copy[0] -= 10;
-      }
-      if (state.petDirection === 'NW') {
-        copy[0] -= 10;
-        copy[1] -= 10;
-      }
-      state.petIndex = copy;
-      console.log('position', state.petIndex);
+
+      state.petIndexList = copy;
     },
     CHANGE_DIRECTION: (state, action) => {
+      console.log('changing direction');
+      const index = action.payload;
+      const copy = [...state.petDirectionList];
       let directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
       //max right
-      if (state.petIndex[0] > 1000) {
+      if (state.petIndexList[index][0] > 1000) {
         //bottom right corner
-        if (state.petIndex[1] > 650) {
+        if (state.petIndexList[index][1] > 650) {
           directionArray = ['N', 'NW', 'W'];
           //top right corner
-        } else if (state.petIndex[1] < 150) {
+        } else if (state.petIndexList[index][1] < 150) {
           directionArray = ['W', 'S', 'SW'];
           //right
         } else {
@@ -58,12 +64,12 @@ const petSlice = createSlice({
         }
       }
       //max left
-      if (state.petIndex[0] < 150) {
+      if (state.petIndexList[index][0] < 150) {
         //bottom left
-        if (state.petIndex[1] > 650) {
+        if (state.petIndexList[index][1] > 650) {
           directionArray = ['N', 'NE', 'E'];
           //top left
-        } else if (state.petIndex[1] < 150) {
+        } else if (state.petIndexList[index][1] < 150) {
           directionArray = ['E', 'S', 'SE'];
           //left edge
         } else {
@@ -71,19 +77,34 @@ const petSlice = createSlice({
         }
       }
       //top
-      if (state.petIndex[1] < 150) {
+      if (state.petIndexList[index][1] < 150) {
         directionArray = ['E', 'SE', 'S', 'SW', 'W'];
       }
 
-      if (state.petIndex[1] > 650) {
+      if (state.petIndexList[index][1] > 650) {
         directionArray = ['E', 'NE', 'N', 'NW', 'W'];
       }
-      state.petDirection =
+      copy[index] =
         directionArray[Math.floor(Math.random() * directionArray.length)];
-      console.log(state.petDirection);
+      state.petDirectionList = copy;
+    },
+    CHOOSE_NEW_PET: (state, action) => {
+      const directionArray = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+      const colorChoice = action.payload;
+      const colorListCopy = [...state.petColorList];
+      colorListCopy.push(colorChoice);
+      const petIndexListCopy = [...state.petIndexList];
+      petIndexListCopy.push([150, 150]);
+      const directionListCopy = [...state.petDirectionList];
+      directionListCopy.push(
+        directionArray[Math.floor(Math.random() * directionArray.length)]
+      );
+      state.petColorList = colorListCopy;
+      state.petIndexList = petIndexListCopy;
+      state.petDirectionList = directionListCopy;
     },
   },
 });
 
-export const { PET_MOVE, CHANGE_DIRECTION } = petSlice.actions;
+export const { PET_MOVE, CHANGE_DIRECTION, CHOOSE_NEW_PET } = petSlice.actions;
 export default petSlice.reducer;
