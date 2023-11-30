@@ -46,6 +46,10 @@ const petSchema = new Schema({
     type: String,
     required: true,
   },
+
+  owner: {
+    type: String,
+  },
 });
 
 const Pet = mongoose.model("pets", petSchema);

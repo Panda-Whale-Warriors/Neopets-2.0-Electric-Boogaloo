@@ -7,8 +7,10 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 // handle parsing request body
+app.use(cookieParser()); // let thy cookies be brought onto thee
 app.use(express.json()); // parses body EXCEPT html
 app.use(express.urlencoded({ extended: true })); // parses html
 
@@ -20,17 +22,12 @@ app.use(
 );
 
 // handle static serve
-app.use("/dist", express.static(path.resolve(__dirname, "../dist")));
-app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
+// app.use("/dist", express.static(path.resolve(__dirname, "../dist")));
+// app.use("/assets", express.static(path.join(__dirname, "../client/assets")));
 // serve log-in.html on /
 
 app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
-});
-
-// serve signup.html on /signup
-app.get("/signup", (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, "../not client/signup.html"));
 });
 
 // serve index.html on the route for /create
