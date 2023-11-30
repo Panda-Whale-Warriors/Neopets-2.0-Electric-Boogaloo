@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 
-function StatusBar() {
+function StatusBar(props) {
   // set states for both hunger and thirst
   const [hunger, setHunger] = useState(0);
   const [thirst, setThirst] = useState(0);
@@ -64,9 +64,15 @@ function StatusBar() {
   };
   // render
 
+  const { name } = props;
+
   return (
     <div>
+      <div>
+        <strong>{name}</strong>
+      </div>
       <span id='hunger'>Hunger:</span>
+
       <progress
         value={hunger}
         max='100'

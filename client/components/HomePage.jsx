@@ -7,6 +7,7 @@ import {
   PET_MOVE,
   CHANGE_DIRECTION,
   POPULATE_SCREEN,
+  RESET_STATE,
 } from '../reducers/petReducer.js';
 
 const jellyfish = {
@@ -33,10 +34,12 @@ const HomePage = () => {
   const petIndexList = useSelector((store) => store.pet.petIndexList);
   const petDirectionList = useSelector((store) => store.pet.petDirectionList);
   const petColorList = useSelector((store) => store.pet.petColorList);
+  const petNameList = useSelector((store) => store.pet.petNameList);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logOut = async () => {
+    dispatch(RESET_STATE());
     const response = await fetch('/users', {
       method: 'DELETE',
 
@@ -104,7 +107,7 @@ const HomePage = () => {
               top: `${petIndexList[j][1] - 60}px`,
             }}
           >
-            <StatusBar />
+            <StatusBar name={petNameList[j]} />
           </div>
         </div>
       );
@@ -112,10 +115,6 @@ const HomePage = () => {
     return array;
   }
   const petRenderings = mapPets();
-  // const statusStyle = {
-  //   left: `${petIndex[0]}px`,
-  //   top: `${petIndex[1] - 60}px`,
-  // };
 
   return (
     <div className='main-container'>
